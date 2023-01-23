@@ -21,13 +21,33 @@ struct ContentView: View {
 //        }
         ZStack {
             VStack(spacing: 0) {
-                Color.white
-                Color.blue
+//                Color.white
+//                Color.blue
+                LinearGradient(
+                    gradient:
+                        Gradient(
+                            stops: [
+                                .init(color: .blue, location: 0.45),
+                                .init(color: .red, location: 0.55)
+                            ]
+                        ),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
             }
-            Text("Sylvia")
-                .foregroundStyle(.secondary)
-                .padding(50)
-                .background(.ultraThinMaterial)
+            VStack {
+                Text("Sylvia")
+                    .foregroundStyle(.secondary)
+                    .padding(50)
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(15)
+                Button("Button 1"){}.buttonStyle(.bordered)
+                Button("Button 2", role: .destructive){}.buttonStyle(.bordered)
+                Button("Button 3"){}.buttonStyle(.borderedProminent)
+                Button("Button 4", role: .destructive){}
+                    .buttonStyle(.borderedProminent)
+                    .tint(.mint)
+            }
         }
         .ignoresSafeArea()
         // this won't fill the whole view
