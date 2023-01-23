@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var showingAlert = false
+    
     var body: some View {
 //        VStack(alignment: .leading, spacing: 20) {
 //            Text("Hello, world!")
@@ -41,18 +44,28 @@ struct ContentView: View {
                     .padding(50)
                     .background(.ultraThinMaterial)
                     .cornerRadius(15)
-                Button("Button 1"){}.buttonStyle(.bordered)
-                Button("Button 2", role: .destructive){}.buttonStyle(.bordered)
-                Button("Button 3"){}.buttonStyle(.borderedProminent)
-                Button("Button 4", role: .destructive){}
+                HStack {
+                    Button{
+                        showingAlert.toggle()
+                    }
+                    label: {
+                        Label("Hello", systemImage: "pencil")
+                    }
                     .buttonStyle(.borderedProminent)
                     .tint(.mint)
+                    .alert("Important alert", isPresented: $showingAlert){}
+                    Button("Button 1"){}.buttonStyle(.bordered)
+                    Button("Button 2", role: .destructive){}.buttonStyle(.bordered)
+                }
+                HStack {
+                    Button("Button 3"){}.buttonStyle(.borderedProminent)
+                    Button("Button 4", role: .destructive){}
+                        .buttonStyle(.borderedProminent)
+                        .tint(.mint)
+                }
             }
         }
         .ignoresSafeArea()
-        // this won't fill the whole view
-        // z stack works like z index
-        // .background(.red)
     }
 }
 
