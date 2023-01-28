@@ -30,8 +30,8 @@ struct ContentView: View {
                     gradient:
                         Gradient(
                             stops: [
-                                .init(color: .blue, location: 0.45),
-                                .init(color: .red, location: 0.55)
+                                .init(color: .blue, location: 0),
+                                .init(color: .pink, location: 1)
                             ]
                         ),
                     startPoint: .top,
@@ -53,7 +53,12 @@ struct ContentView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.mint)
-                    .alert("Important alert", isPresented: $showingAlert){}
+                    .alert("Channel Error", isPresented: $showingAlert){
+                        Button("Delete", role: .destructive){}
+                        Button("Cancel", role: .cancel){}
+                    } message: {
+                        Text("There was no streaming data vailable for the following channel: Channel Name")
+                    }
                     Button("Button 1"){}.buttonStyle(.bordered)
                     Button("Button 2", role: .destructive){}.buttonStyle(.bordered)
                 }
