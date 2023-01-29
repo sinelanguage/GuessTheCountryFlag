@@ -8,69 +8,49 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     
-    @State private var showingAlert = false
+    @State private var correctAnswer = Int.random(in: 0...2)
+    
+    @State private var showingScore = false
+    @State private var scoreTitle = ""
     
     var body: some View {
-//        VStack(alignment: .leading, spacing: 20) {
-//            Text("Hello, world!")
-//            Text("Hello, world2!")
-//
-//            HStack(alignment: .top , spacing: 20) {
-//                Text("Hello, world!")
-//                Text("Hello, world2")
-//                Text("Hello, world2")
-//            }
-//        }
         ZStack {
-            VStack(spacing: 0) {
-//                Color.white
-//                Color.blue
-                LinearGradient(
-                    gradient:
-                        Gradient(
-                            stops: [
-                                .init(color: .blue, location: 0),
-                                .init(color: .pink, location: 1)
-                            ]
-                        ),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            }
-            VStack {
-                Text("Sylvia")
-                    .foregroundStyle(.secondary)
-                    .padding(50)
-                    .background(.ultraThinMaterial)
-                    .cornerRadius(15)
-                HStack {
-                    Button{
-                        showingAlert.toggle()
-                    }
-                    label: {
-                        Label("Hello", systemImage: "pencil")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.mint)
-                    .alert("Channel Error", isPresented: $showingAlert){
-                        Button("Delete", role: .destructive){}
-                        Button("Cancel", role: .cancel){}
-                    } message: {
-                        Text("There was no streaming data vailable for the following channel: Channel Name")
-                    }
-                    Button("Button 1"){}.buttonStyle(.bordered)
-                    Button("Button 2", role: .destructive){}.buttonStyle(.bordered)
+            Color.blue
+                .ignoresSafeArea()
+            VStack(spacing: 30) {
+                VStack {
+                    Text("Tap the flag of:").foregroundColor(.white)
+                    Text(countries[correctAnswer]).foregroundColor(.white)
                 }
-                HStack {
-                    Button("Button 3"){}.buttonStyle(.borderedProminent)
-                    Button("Button 4", role: .destructive){}
-                        .buttonStyle(.borderedProminent)
-                        .tint(.mint)
+                
+                ForEach(0..<3) { number in
+                    Button {
+                        flagTapped(number: number)
+                    } label: {
+                        Image(countries[number])
+                            .renderingMode(.original)
+                    }
                 }
             }
         }
-        .ignoresSafeArea()
+        .alert(scoreTitle, isPresented: $showingScore){}
+    }
+    
+    func flagTapped(number: Int) {
+        if number == correctAnswer {
+            scoreTitle = "Right!"
+        } else {
+            scoreTitle = "Wrong :("
+        }
+        
+        showingScore = true
+    }
+    
+    func gameReset() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
     }
 }
 
